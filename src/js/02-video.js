@@ -4,25 +4,19 @@ import throttle from 'lodash.throttle';
 const iframe = document.querySelector('iframe');
 const myPlayer = new player(iframe);
 
-const onPlay = function () {
-  console.log(timeupdate);
+const STORAGE_KEY = 'videoplayer-current-time';
+
+const onPlay = function (data) {
+  console.log('timeupdate');
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(timeupdate));
 };
 
-myPlayer.on(
-  'play',
-  _.throttle(1000, () => {
-    localStorage.setItem(
-      'videoplayer-current-time',
-      JSON.stringify(timeupdate)
-    );
-    console.log('video started');
-  })
-);
-
-myPlayer.off('click', () => {
-  console.log(localStorage.getItem(timeupdate));
+myPlayer.on('timeupdate', function (data) {
+  localStorage.setItem(STORAGE_KEY, data.percent);
 });
 
-// myPlayer.getVideoTitle().then(function (title) {
-//   console.log('title:', title);
+// myPlayer.off('click', () => {
+//   console.log(localStorage.getItem(timeupdate));
 // });
+
+// player.setCurrentTime(videoplayer - current - time);
