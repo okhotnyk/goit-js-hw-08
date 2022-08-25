@@ -13,6 +13,8 @@ myPlayer.on(
   }, 1000)
 );
 
-const number = JSON.parse(localStorage.getItem(STORAGE_KEY));
-
-myPlayer.setCurrentTime(number);
+const seconds = JSON.parse(localStorage.getItem(STORAGE_KEY));
+if (!seconds) {
+  seconds = 0;
+}
+myPlayer.setCurrentTime(seconds);
